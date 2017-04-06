@@ -1,25 +1,53 @@
-  <!DOCTYPE html>
-<html>
-<head>
-
-  <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="To Sell and Buy things Locally">
+      <meta name="keywords" content="Sell, Buy, Trade">
+      <meta name="author" content="Nguyen Le">
+      <title>Salelist</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+      <link href="https://fonts.googleapis.com/css?family=Kalam:300" rel="stylesheet">
+        <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
   </script>
 
 <script src="//apis.google.com/js/platform.js?onload=start"> </script>
 
-<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
-
-
-</head>
-
-
+   </head>
 <body>  
 
-
-<!-- GOOGLE PLUS SIGN IN-->
-
+     <header>
+         <div class="container">
+            <div id="branding">
+               <h1><span class="highlight">Sales</span>List</h1>
+            </div>
+            <nav>
+               <ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/about">About</a></li>
+                  <li><a href="/cities">Find City</a></li>
+                  <li><a href="/contact">Contact</a></li>
+               </ul>
+            </nav>
+          </div>
+      </header>
           
+<section id="middle">
+  <div class="container">
+                           <h3>Sign in with Google or Facebook</h3>
+  </div>
+</section>
+
+          <div class = "container">
+<br>
           <div id="signInButton">
           <span class="g-signin"
             data-scope="openid email"
@@ -120,9 +148,8 @@ function signInCallback(authResult) {
 </script>
 
 
-<button>
-         
-
+<div id="signInButton">
+<button class= "btn">
           <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
 <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
 
@@ -130,7 +157,13 @@ function signInCallback(authResult) {
 
 
         </button>
+</div>
 <!--END FACEBOOK SIGN IN -->
+</div>
+
+      <footer>
+         <p>Copyright &copy; 2017. Saleslist Web Application by Nguyen Le</p>
+      </footer>
 
   </body>
 
