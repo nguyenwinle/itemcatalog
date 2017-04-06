@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<section id = "middle">
+	<div class = "container">
+<h1> Add New City </h1>
+</div>
+</section>
+
+<div class = "container">
+<form action="{{url_for('newCity', city_id=city_id )}}" method = 'POST'>
+<br>
+<p>City Name (ONLY if not listed):</p>
+
+<input type='text' size='30' name='name'>
+
+<input type='submit' value='Create'>
+</form>
+<br>
+<a href = '{{url_for('city')}}'> Cancel </a>
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<section id = "middle">
+   <div class = container>
+      <h1>
+         {{ city.name }}
+      </h1>
+      <br>
+      <a class="btn btn-default" href="{{url_for('newItem', city_id = city_id) }}" role="button">Add New Item</a>
+
+      <div class = 'flash'>
+         {% with messages = get_flashed_messages() %}
+         {% if messages %}
+         <ul>
+            {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+            {% endfor %}
+         </ul>
+         {% endif %}
+         {% endwith %}
+      </div>
+   </div>
+</section>
+
+{% for i in items %}
+
+<div id = 'item'>
+   <div class = "container">
+      <div class = 'nameAndPrice'>
+         <br>
+         <span class = 'name'>
+            <p><strong>Name:</strong> {{i.name}}</p>
+         </span>
+         <span class = 'price'>
+            <p><strong>Price:</strong> {{i.price}} </p>
+         </span>
+      </div>
+      <div class = 'description'>
+         <p><strong>Description:</strong> {{i.description}}</p>
+      </div>
+      <div class = 'category'>
+         <p><strong>Category:</strong> {{i.category}}</p>
+      </div>
+      <div class = 'contact'>
+         <p><strong>Contact:</strong> {{i.contact}}</p>
+      </div>
+      <div class = "editdeletepane">
+         <a href='{{url_for('editItem', city_id = city.id, item_id=i.id)}}' >Edit</a> |
+         <a href='{{url_for('deleteItem', city_id = city.id, item_id=i.id)}}' >
+         Delete</a>
+      </div>
+      <br>
+      <hr>
+   </div>
+
+   {% endfor %}
+
+</div>
+</div>
+</div>
+
+{% endblock %}

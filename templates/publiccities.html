@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+        {% for i in cities %}
+    <div class = 'cityname'>
+        <div class = 'container'>
+            <br>
+        <a href = '{{url_for('showItems', city_id = i.id)}}'>{{i.name}}</a>
+<hr>
+  
+
+</div>
+</div>
+      {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<section id= "middle">
+    <div class="container">
+<h1>Choose a City
+</h1>
+<br>
+     <a class="btn btn-default" href="/city/new" role="button">Add New City</a>
+
+</div>
+<div class = "container">
+            <div class = 'flash'>
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+</div>
+
+</section>
+
+<hr>
+
+
+        {% for i in cities %}
+    <div class = 'cityname'>
+        <div class = 'container'>
+        <a href = '{{url_for('showItems', city_id = i.id)}}'>{{i.name}}</a>
+
+    
+
+  <div class = "editdeletepane">
+
+    <a href='{{url_for('editCity', city_id = i.id)}}' >Edit</a>
+    |
+    <a href='{{url_for('deleteCity', city_id = i.id)}}' >
+    Delete</a>
+
+    </div>
+    <hr>
+</div>
+        {% endfor %}
+
+</div>
+
+
+{% endblock %}

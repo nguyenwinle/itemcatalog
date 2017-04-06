@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section id="middle">
+   <div class="container">
+      <h1>Looking for a specific item?</h1>
+      <form>
+         <input type="text" placeholder="Enter item...">
+         <button type="submit" class="button_1">Search</button>
+      </form>
+   </div>
+</section>
+
+<section id="main">
+   <div class="container">
+      <article id="main-col">
+         <h1 class="page-title">About Project</h1>
+         <p>
+            Developed an application that provides a list of items within a variety of categories as well as provide a user registration and authentication system. Registered users will have the ability to post, edit and delete their own items.
+         </p>
+         <p class="dark">
+            Modern web applications perform a variety of functions and provide amazing features and utilities to their users; but deep down, it’s really all just creating, reading, updating and deleting data. In this project, you’ll combine your knowledge of building dynamic websites with persistent data storage to create a web application that provides a compelling service to users.
+         </p>
+      </article>
+      <aside id="sidebar">
+         <div class="dark">
+            <h3>What I Learned</h3>
+            <p>
+               Learned how to develop a RESTful web application using the Python framework Flask along with implementing third-party OAuth authentication. Also learned when to properly use the various HTTP methods available and how these methods relate to CRUD (create, read, update and delete) operations.
+            </p>
+         </div>
+      </aside>
+   </div>
+</section>
+{% endblock %}

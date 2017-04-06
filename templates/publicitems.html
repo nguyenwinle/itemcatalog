@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+        <section id = "middle">
+        <div class = container>
+        <h1>Looking for a specific item?</h1>
+        <form>
+          <input type="text" placeholder="Enter item...">
+          <button type="submit" class="button_1">Search</button>
+        </form>
+
+         
+</div>
+</section>
+
+<div class = "top">
+<div class = "container">
+ <h1>
+        	{{ city.name }}</h1>
+
+</div>
+</div>
+
+
+
+
+
+        {% for i in items %}
+        <div id = 'middle'>
+            <div class = "container">
+    <div class = 'nameAndPrice'>
+        <span class = 'name'><p><strong>Name:</strong> {{i.name}}</p></span>
+
+        <span class = 'price'>
+
+
+        <p><strong>Price:</strong> {{i.price}} </p>
+    </span>
+    </div>
+
+
+
+    <div class = 'description'>
+        <p><strong>Description:</strong> {{i.description}}</p>
+    </div>
+
+    <div class = 'description'>
+        <p><strong>Category:</strong> {{i.category}}</p>
+    </div>
+    <hr>
+
+
+
+
+
+</div>
+</div>
+</div>
+        {% endfor %}
+
+
+{% endblock %}

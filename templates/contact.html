@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="middle">
+   <div class="container">
+      <h1>Looking for a specific item?</h1>
+      <form>
+         <input type="text" placeholder="Enter item...">
+         <button type="submit" class="button_1">Search</button>
+      </form>
+   </div>
+</section>
+
+<section id="main">
+   <div class="container">
+      <article id="main-col">
+         <h1 class="page-title">Contact</h1>
+         <ul id="contacts">
+            <li>
+               <a href="https://www.linkedin.com/in/nguyenle1990/">
+                  <h3>LinkedIn</h3>
+               </a>
+            </li>
+            <li>
+               <a href="https://www.facebook.com/nguyen.le.10690">
+                  <h3>Facebook</h3>
+               </a>
+            </li>
+            <li>
+               <a href="https://github.com/nguyenwinle/">
+                  <h3>Github</h3>
+               </a>
+            </li>
+         </ul>
+      </article>
+      <aside id="sidebar">
+         <div class="dark">
+            <h3>Send a Message</h3>
+            <form class="quote">
+               <div>
+                  <label>Name</label><br>
+                  <input type="text" placeholder="Name">
+               </div>
+               <div>
+                  <label>Email</label><br>
+                  <input type="email" placeholder="Emial Address">
+               </div>
+               <div>
+                  <label>Message</label><br>
+                  <textarea placeholder="Message"></textarea>
+               </div>
+               <button class="button_1" type="submit">Send</button>
+            </form>
+         </div>
+      </aside>
+   </div>
+</section>
+{% endblock %}
