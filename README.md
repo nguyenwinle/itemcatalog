@@ -15,7 +15,7 @@ Item Catalog includes:
 * About page
 * City and City's items page
 * Contact page
-Note that the search and message form in the Contact page does not work
+ (The search bar and message form in the Contact page does not work at this time)
 
 User's features:
 * Users can add//edit/delete their own city an items
