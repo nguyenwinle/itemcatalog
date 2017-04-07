@@ -2,6 +2,8 @@ import jinja2
 
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 
+from functools import wraps
+
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, City, forSale, User
@@ -30,6 +32,14 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+# Decorator to check for user login
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in login_session:
+            return redirect('/login')
+        return f(*args, **kwargs)
+    return decorated_function
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -259,12 +269,6 @@ def disconnect():
     credentials = login_session.get('credentials')
     if credentials is None:
         return redirect('/login')
-    del login_session['credentials']
-    del login_session['gplus_id']
-    del login_session['username']
-    del login_session['email']
-    del login_session['picture']
-    return redirect('/')
 
     if 'provider' in login_session:
         if login_session['provider'] == 'facebook':
@@ -328,9 +332,9 @@ def city():
 
 # 2. page to add new city
 @app.route('/city/new', methods=['GET', 'POST'])
+@login_required
 def newCity():
-    if 'username' not in login_session:
-        return redirect('/login')
+    pass
     user_id = getUserID(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
@@ -347,10 +351,14 @@ def newCity():
 
 # 3. page to edit the city
 @app.route('/city/<int:city_id>/edit', methods=['GET', 'POST'])
+@login_required
 def editCity(city_id):
     editedCity = session.query(City).filter_by(id=city_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
+    pass
+    if editedCity.user_id != login_session['user_id']:
+        return "<script>function myFunction() " \
+               "{alert('You are not allowed to edit edit city.')" \
+               ";}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedCity.name = request.form['name']
@@ -359,16 +367,20 @@ def editCity(city_id):
         flash("City updated!")
         return redirect(url_for('city', city_id=city_id))
     else:
-        return render_template('editcity.html', editedCity = editedCity, city_id=city_id)
+        return render_template('editcity.html',
+                               editedCity = editedCity,
+                               city_id=city_id)
 
 # 4. page to delete the city
 @app.route('/city/<int:city_id>/delete', methods=['GET', 'POST'])
+@login_required
 def deleteCity(city_id):
     CityToDelete = session.query(City).filter_by(id=city_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
+    pass
     if CityToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not allowed to delete this city.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() " \
+               "{alert('You are not allowed to delete this city.')" \
+               ";}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(CityToDelete)
         session.commit()
@@ -376,7 +388,9 @@ def deleteCity(city_id):
         return redirect(url_for('city', cities=cities))
 
     else:
-        return render_template('deletecity.html', CityToDelete=CityToDelete, city_id=city_id)
+        return render_template('deletecity.html',
+                               CityToDelete=CityToDelete,
+                               city_id=city_id)
 
 # 5. page to the city's items that are being sold
 @app.route('/city/<int:city_id>/forsale')
@@ -385,20 +399,29 @@ def showItems(city_id):
     creator = getUserInfo(city.user_id)
     items = session.query(forSale).filter_by(city_id=city_id).all()
     if 'username' not in login_session:
-        return render_template('publicitems.html', items=items, city=city, creator=creator)
+        return render_template('publicitems.html',
+                               items=items,
+                               city=city,
+                               creator=creator)
     else:
-        return render_template(
-            'item.html', city=city, items=items, city_id=city_id, creator=creator)
+        return render_template('item.html',
+                               city=city,
+                               items=items,
+                               city_id=city_id,
+                               creator=creator)
 
 # 6. page to add items for sale
 @app.route('/forsale/<int:city_id>/new', methods=['GET', 'POST'])
+@login_required
 def newItem(city_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    pass
     if request.method == 'POST':
-        itemSale = forSale(name=request.form['name'], description=request.form[
-                           'description'], price=request.form['price'], contact=request.form['contact'],
-                           category=request.form['category'], city_id=city_id, user_id=login_session['user_id'])
+        itemSale = forSale(name=request.form['name'],
+                           description=request.form['description'],
+                           price=request.form['price'],
+                           contact=request.form['contact'],
+                           category=request.form['category'],
+                           city_id=city_id, user_id=login_session['user_id'])
         session.add(itemSale)
         session.commit()
         flash("New item created!")
@@ -408,11 +431,15 @@ def newItem(city_id):
 
 # 7. page to edit the item that is listed
 @app.route('/forsale/<int:city_id>/<int:item_id>/edit', methods=['GET', 'POST'])
+@login_required
 def editItem(city_id, item_id):
     editedItem = session.query(forSale).filter_by(id=item_id).one()
     city = session.query(City).filter_by(id=city_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
+    pass
+    if editedItem.user_id != login_session['user_id']:
+        return "<script>function myFunction() " \
+               "{alert('You are not allowed to edit this item.')" \
+               ";}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -429,21 +456,31 @@ def editItem(city_id, item_id):
         flash('Item Sucessfully Edited')
         return redirect(url_for('showItems', city_id=city_id))
     else:
-        return render_template('edititem.html', city_id=city_id, item_id=item_id, item=editedItem)
+        return render_template('edititem.html',
+                               city_id=city_id,
+                               item_id=item_id,
+                               item=editedItem)
 
 # 8. page to delete the item
 @app.route('/forsale/<int:city_id>/<int:item_id>/delete', methods=['GET', 'POST'])
+@login_required
 def deleteItem(city_id, item_id):
     itemDelete = session.query(forSale).filter_by(id=item_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
+    pass
+    if itemDelete.user_id != login_session['user_id']:
+        return "<script>function myFunction() " \
+               "{alert('You are not allowed to delete this item.')" \
+               ";}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(itemDelete)
         session.commit()
         flash("Item deleted!")
         return redirect(url_for('showItems', city_id=city_id))
     else:
-        return render_template('deleteitem.html', city_id=city_id, item_id=item_id, item=itemDelete)
+        return render_template('deleteitem.html',
+                               city_id=city_id,
+                               item_id=item_id,
+                               item=itemDelete)
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
