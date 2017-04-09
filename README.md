@@ -1,14 +1,14 @@
-#Item Catalog
+# Item Catalog
 
 Developed a web application using the Flask framework in Python that provides a list of items within each city as well as building a user login via google and facebook to utilize the add/edit/delete features of the application. The application uses the OAuth protocol for authentication and authorization. 
 
 Also implemented various HTTP methods and how these methods relate to CRUD (create, read, update and delete) operations. 
 
-##Tools and Frameworks
+## Tools and Frameworks
 
-HTML5. CSS, Bootstrap, Vagrant, Flask, SQLAlchemy, Google and Facebook Oauth2 & APIs.
+HTML5, CSS, Bootstrap, Vagrant, Flask, SQLAlchemy, Google and Facebook Oauth2 & APIs.
 
-##Project Requirements
+## Project Requirements
 
 Item Catalog includes:
 * Home page of Web Application
@@ -23,7 +23,7 @@ User's features:
 Login/Logout:
 * Authorization and Authentication via Facebook and Google sign in
 
-##Setup
+## Setup
 
 This project requires a virtual machine such as VirtualBox and Vagrant.
 
@@ -31,7 +31,7 @@ Links to VirtualBox and Vagrant:
 [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
 [Vagrant](https://www.vagrantup.com/)
 
-###run the web application:
+### run the web application:
 1. Clone this repository
 2. Open terminal such as Git Bash
 3. Change directory to vagrant
